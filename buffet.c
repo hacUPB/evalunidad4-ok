@@ -24,7 +24,7 @@ void* producer(void* argv){
     //add to the buffer
     sem_wait(&semEmpty);
     pthread_mutex_lock(&mutexBuffer);
-        buffer[count]= x;
+        buffer[count]= x; //esto puede ser susceptible puede llegar a incurrir en una race condition
         count++;
     
     
@@ -41,7 +41,7 @@ void* consumer(void* args){
     //remove from the buffer
     sem_wait(&semFull);
      pthread_mutex_lock(&mutexBuffer);
-        y= buffer[count -1];
+        y= buffer[count -1];//esto puede ser susceptible puede llegar a incurrir en una race condition
         count--;
      
     pthread_mutex_unlock(&mutexBuffer);
